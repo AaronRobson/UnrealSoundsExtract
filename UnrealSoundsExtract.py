@@ -83,7 +83,7 @@ def GetFilenamesInDirectory(directory):
 def MakeFormatString(makeSubFolderForEachCollectionFile=MAKE_SUB_FOLDER_FOR_EACH_COLLECTION_FILE, extractorUtilFileName=EXTRACTOR_UTIL_FILENAME):
 	return '%s batchexport {0} sound wav "{1}%s"' % (extractorUtilFileName, bool(makeSubFolderForEachCollectionFile) * '{0}')
 
-def DoExtraction(directory = soundsDirectory):
+def DoExtraction(directory=soundsDirectory):
 	filenames = GetFilenamesInDirectory(directory)
 	if filenames: #if there are files
 		formatString = MakeFormatString();
