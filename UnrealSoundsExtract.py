@@ -23,12 +23,6 @@ description = """Must be run from the "System" folder of an unreal game which ha
 Extracts the sounds from each sound file (\\Sounds\\*.uax) of an Unreal game.
 """
 
-changeLog = """
-	21/10/2010: removed for loops in favour of list comprehensions and map functions.
-	25/10/2010: Refactored into functions and added main and NoFilesError Exception classes.
-				After NoFilesError had been tested DirectoryDoesNotExistError was added.
-"""
-
 #up a directory from the CWD (CurrentWorkingDirectory (where the executable file is (in "System")))
 rootDirectory = os.path.abspath('..')
 #systemDirectory = os.path.join(rootDirectory, 'System')
