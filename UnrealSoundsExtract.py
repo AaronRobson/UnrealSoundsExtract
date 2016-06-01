@@ -2,6 +2,8 @@
 
 import os
 
+from typing import Sequence
+
 #from: http://wiki.beyondunreal.com/Legacy:BatchExportCommandlet
 #command example: "UCC batchexport Announcer.uax sound wav ..\\test"
 
@@ -50,7 +52,7 @@ class NoFilesError(UnrealSoundsExtractError):
 class DirectoryDoesNotExistError(UnrealSoundsExtractError):
 	value = 'Directory not found'
 
-def WalkDir(directory):
+def WalkDir(directory: str):
 	if os.path.exists(directory):
 		#os.walk returns a 3-tuple of (the given full directory, the sub-directories, the files)
 		#put into list() then out again by accessing the first index: [0] (otherwise gets stuck as confusing generator)
@@ -59,7 +61,7 @@ def WalkDir(directory):
 	else:
 		raise DirectoryDoesNotExistError(directory)
 
-def GetFromDirectoryOtherFilesOrDirectories(directory, files=True):
+def GetFromDirectoryOtherFilesOrDirectories(directory: str, files: bool=True) -> Sequence[str]:
 	if files:
 		index = 2
 	else:
@@ -72,7 +74,7 @@ def GetFromDirectoryOtherFilesOrDirectories(directory, files=True):
 		#no files/directories to report
 		return []
 
-def GetFoldersInDirectory(directory):
+def GetFoldersInDirectory(directory: str) -> Sequence[str]:
 	return GetFromDirectoryOtherFilesOrDirectories(directory, False)
 
 def GetFilenamesInDirectory(directory):
@@ -80,10 +82,10 @@ def GetFilenamesInDirectory(directory):
 	#filenames = [f for f in os.listdir(soundsDirectory) if os.path.isfile(os.path.join(soundsDirectory, f))]
 	return GetFromDirectoryOtherFilesOrDirectories(directory)
 
-def MakeFormatString(makeSubFolderForEachCollectionFile=MAKE_SUB_FOLDER_FOR_EACH_COLLECTION_FILE, extractorUtilFileName=EXTRACTOR_UTIL_FILENAME):
+def MakeFormatString(makeSubFolderForEachCollectionFile: str=MAKE_SUB_FOLDER_FOR_EACH_COLLECTION_FILE, extractorUtilFileName: str=EXTRACTOR_UTIL_FILENAME) -> str:
 	return '%s batchexport {0} sound wav "{1}%s"' % (extractorUtilFileName, bool(makeSubFolderForEachCollectionFile) * '{0}')
 
-def DoExtraction(directory=soundsDirectory):
+def DoExtraction(directory: str=soundsDirectory) -> None:
 	filenames = GetFilenamesInDirectory(directory)
 	if filenames: #if there are files
 		formatString = MakeFormatString();
@@ -92,7 +94,7 @@ def DoExtraction(directory=soundsDirectory):
 	else:
 		raise NoFilesError(directory)
 
-def GetIntroductionString():
+def GetIntroductionString() -> str:
 	return '{0}\nBy {1}\nVersion date: {2}\n\n{3}'.format(title, author, date, description)
 
 if __name__ == "__main__":
