@@ -104,6 +104,3 @@ if __name__ == "__main__":
 		DoExtraction()
 	except (UnrealSoundsExtractError) as e:
 		print(e)
-
-	#keep the window open
-	input('\nPress Enter to Exit:')
