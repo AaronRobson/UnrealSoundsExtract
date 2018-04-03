@@ -1,7 +1,7 @@
 # UnrealSoundsExtract
 To extract game sound effects from Unreal games.
 
-[![Build Status](https://travis-ci.org/AaronRobson/UnrealSoundExtract.svg?branch=master)](https://travis-ci.org/AaronRobson/UnrealSoundExtract)
+[![Build Status](https://travis-ci.org/AaronRobson/UnrealSoundsExtract.svg?branch=master)](https://travis-ci.org/AaronRobson/UnrealSoundsExtract)
 
 ## Instructions
 
