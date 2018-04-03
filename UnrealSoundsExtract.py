@@ -31,24 +31,6 @@ rootDirectory = os.path.abspath('..')
 soundsDirectory = os.path.join(rootDirectory, 'Sounds')
 outputDirectory = os.path.join(rootDirectory, 'SoundsInWav') + os.path.sep
 
-#Helped by: http://en.wikibooks.org/wiki/Python_Programming/Exceptions
-class UnrealSoundsExtractError(Exception): #generic attributes for all my custom exceptions
-    value = 'Default Custom UnrealSoundsExtract Error Message' #would define this as abstract but object hiding isn't a strongpoint of python
-
-    def __init__(self, value):
-        '''Optional text used to help the user identify the specific cause of the error.
-        '''
-        self.parameter = value
-
-    def __str__(self):
-        if self.parameter:
-            return "Error %s; '%s'" % (repr(self.value), self.parameter)
-        else:
-            return repr(self.value) # __repr__ defaults to the value of __str__ when missing
-
-class NoFilesError(UnrealSoundsExtractError):
-    value = 'No Files to Extract from'
-
 def raiseError(error):
     raise error
 
@@ -86,7 +68,6 @@ def DoExtraction(directory: str=soundsDirectory) -> None:
         commands = [formatString.format(filename, outputDirectory) for filename in filenames]
         list(map(os.system, commands))
     else:
-        raise NoFilesError(directory)
 
 def GetIntroductionString() -> str:
     return '{0}\nBy {1}\nVersion date: {2}\n\n{3}'.format(title, author, date, description)
