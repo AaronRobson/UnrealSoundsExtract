@@ -49,17 +49,11 @@ class UnrealSoundsExtractError(Exception): #generic attributes for all my custom
 class NoFilesError(UnrealSoundsExtractError):
     value = 'No Files to Extract from'
 
-class DirectoryDoesNotExistError(UnrealSoundsExtractError):
-    value = 'Directory not found'
+def raiseError(error):
+    raise error
 
 def WalkDir(directory: str):
-    if os.path.exists(directory):
-        #os.walk returns a 3-tuple of (the given full directory, the sub-directories, the files)
-        #put into list() then out again by accessing the first index: [0] (otherwise gets stuck as confusing generator)
-        #may need to take this into account http://stackoverflow.com/questions/229186/os-walk-without-digging-into-directories-below
-        return list(os.walk(directory))[0]
-    else:
-        raise DirectoryDoesNotExistError(directory)
+    return list(os.walk(directory, onerror=raiseError))[0]
 
 def GetFromDirectoryOtherFilesOrDirectories(directory: str, files: bool=True) -> Sequence[str]:
     if files:
