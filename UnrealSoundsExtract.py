@@ -2,8 +2,6 @@
 
 import os
 
-from typing import Sequence
-
 #from: http://wiki.beyondunreal.com/Legacy:BatchExportCommandlet
 #command example: "UCC batchexport Announcer.uax sound wav ..\\test"
 
@@ -34,10 +32,10 @@ outputDirectory = os.path.join(rootDirectory, 'SoundsInWav') + os.path.sep
 def raiseError(error):
     raise error
 
-def WalkDir(directory: str):
+def WalkDir(directory):
     return list(os.walk(directory, onerror=raiseError))[0]
 
-def GetFromDirectoryOtherFilesOrDirectories(directory: str, files: bool=True) -> Sequence[str]:
+def GetFromDirectoryOtherFilesOrDirectories(directory, files=True):
     if files:
         index = 2
     else:
@@ -50,7 +48,7 @@ def GetFromDirectoryOtherFilesOrDirectories(directory: str, files: bool=True) ->
         #no files/directories to report
         return []
 
-def GetFoldersInDirectory(directory: str) -> Sequence[str]:
+def GetFoldersInDirectory(directory):
     return GetFromDirectoryOtherFilesOrDirectories(directory, False)
 
 def GetFilenamesInDirectory(directory):
@@ -58,10 +56,10 @@ def GetFilenamesInDirectory(directory):
     #filenames = [f for f in os.listdir(soundsDirectory) if os.path.isfile(os.path.join(soundsDirectory, f))]
     return GetFromDirectoryOtherFilesOrDirectories(directory)
 
-def MakeFormatString(makeSubFolderForEachCollectionFile: str=MAKE_SUB_FOLDER_FOR_EACH_COLLECTION_FILE, extractorUtilFileName: str=EXTRACTOR_UTIL_FILENAME) -> str:
+def MakeFormatString(makeSubFolderForEachCollectionFile=MAKE_SUB_FOLDER_FOR_EACH_COLLECTION_FILE, extractorUtilFileName=EXTRACTOR_UTIL_FILENAME):
     return '%s batchexport {0} sound wav "{1}%s"' % (extractorUtilFileName, bool(makeSubFolderForEachCollectionFile) * '{0}')
 
-def DoExtraction(directory: str=soundsDirectory) -> None:
+def DoExtraction(directory=soundsDirectory):
     filenames = GetFilenamesInDirectory(directory)
     if filenames: #if there are files
         formatString = MakeFormatString();
@@ -70,7 +68,7 @@ def DoExtraction(directory: str=soundsDirectory) -> None:
     else:
         raise OSError('No Files to Extract from in: {0}.'.format(repr(directory)))
 
-def GetIntroductionString() -> str:
+def GetIntroductionString():
     return '{0}\nBy {1}\nVersion date: {2}\n\n{3}'.format(title, author, date, description)
 
 if __name__ == "__main__":
