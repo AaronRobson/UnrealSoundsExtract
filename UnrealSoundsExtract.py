@@ -68,6 +68,7 @@ def DoExtraction(directory: str=soundsDirectory) -> None:
         commands = [formatString.format(filename, outputDirectory) for filename in filenames]
         list(map(os.system, commands))
     else:
+        raise OSError('No Files to Extract from in: {0}.'.format(repr(directory)))
 
 def GetIntroductionString() -> str:
     return '{0}\nBy {1}\nVersion date: {2}\n\n{3}'.format(title, author, date, description)
