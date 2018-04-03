@@ -76,5 +76,5 @@ if __name__ == "__main__":
 
     try:
         DoExtraction()
-    except (UnrealSoundsExtractError) as e:
+    except Exception as e:
         print(e)
