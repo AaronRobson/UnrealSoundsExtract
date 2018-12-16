@@ -2,6 +2,8 @@
 To extract game sound effects from Unreal games.
 
 [![Build Status](https://travis-ci.org/AaronRobson/UnrealSoundsExtract.svg?branch=master)](https://travis-ci.org/AaronRobson/UnrealSoundsExtract)
+[![CircleCI](https://circleci.com/gh/AaronRobson/UnrealSoundsExtract.svg?style=svg)](https://circleci.com/gh/AaronRobson/UnrealSoundsExtract)
+[![Coverage Status](https://coveralls.io/repos/github/AaronRobson/UnrealSoundsExtract/badge.svg?branch=master)](https://coveralls.io/github/AaronRobson/UnrealSoundsExtract?branch=master)
 
 ## Instructions
 
