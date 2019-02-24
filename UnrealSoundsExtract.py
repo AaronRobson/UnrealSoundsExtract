@@ -14,15 +14,6 @@ EXTRACTOR_UTIL_FILENAME = 'UCC'  # or 'UCC.exe'
 # http://forums.epicgames.com/showthread.php?t=585103
 # something like: UT3.exe Editor.BatchExport ...
 
-title = 'Unreal Sounds Extractor'
-author = 'Aaron Robson'
-date = '21/10/2010'
-
-description = """Must be run from the "System" folder of an unreal game
-which has "\\System\\UCC.exe" (the original Unreal 1 does not).
-Extracts the sounds from each sound file (\\Sounds\\*.uax) of an Unreal game.
-"""
-
 # up a directory from the CWD (CurrentWorkingDirectory
 # (where the executable file is (in "System")))
 rootDirectory = os.path.abspath('..')
@@ -82,16 +73,14 @@ def DoExtraction(directory=soundsDirectory):
             'No Files to Extract from in: {0}.'.format(repr(directory)))
 
 
-def GetIntroductionString():
-    return '{0}\nBy {1}\nVersion date: {2}\n\n{3}'.format(
-        title, author, date, description)
-
-
 def produce_parser():
     '''Produce command-line parser.
     '''
     parser = argparse.ArgumentParser(
-        description=title,
+        description='Extracts the sounds from each sound file '
+                    '(/Sounds/*.uax) of games that use the Unreal Engine. '
+                    'Requires an unreal game which has "/System/UCC.exe" '
+                    '(for example Unreal 1 does not have this file).'
     )
     parser.add_argument(
         '-i', '--input',
@@ -108,13 +97,14 @@ def produce_parser():
     parser.add_argument(
         '-f', '--flatten',
         action='store_true',
-        help='all sub-sounds are extracted directly within the output directory',
+        help='all sub-sounds are extracted directly to the output directory',
     )
     return parser
 
 
 if __name__ == "__main__":
-    print(GetIntroductionString() + '\n')
+    parser = produce_parser()
+    args = parser.parse_args()
 
     try:
         DoExtraction()
