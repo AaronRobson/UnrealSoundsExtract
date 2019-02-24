@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import argparse
 import os
 
 # from: http://wiki.beyondunreal.com/Legacy:BatchExportCommandlet
@@ -84,6 +85,32 @@ def DoExtraction(directory=soundsDirectory):
 def GetIntroductionString():
     return '{0}\nBy {1}\nVersion date: {2}\n\n{3}'.format(
         title, author, date, description)
+
+
+def produce_parser():
+    '''Produce command-line parser.
+    '''
+    parser = argparse.ArgumentParser(
+        description=title,
+    )
+    parser.add_argument(
+        '-i', '--input',
+        required=True,
+        dest='input',
+        help='the install directory of the game',
+    )
+    parser.add_argument(
+        '-o', '--output',
+        default='./SoundsInWav/',
+        dest='output',
+        help='the output directory for the extracted sound files',
+    )
+    parser.add_argument(
+        '-f', '--flatten',
+        action='store_true',
+        help='all sub-sounds are extracted directly within the output directory',
+    )
+    return parser
 
 
 if __name__ == "__main__":
