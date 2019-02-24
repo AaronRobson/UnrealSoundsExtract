@@ -12,4 +12,4 @@ test:
 
 .PHONY: coverage
 coverage:
-  coverage run --source=. -m unittest discover
+	coverage run --source=. -m unittest discover
