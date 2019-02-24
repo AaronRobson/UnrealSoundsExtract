@@ -16,7 +16,3 @@ class TestMakeFormatString(unittest.TestCase):
         given = ute.MakeFormatString(subFolderPerCollectionFile=False)
         actual = 'UCC batchexport {0} sound wav "{1}"'
         self.assertEqual(given, actual)
-
-
-if __name__ == "__main__":
-    unittest.main()
