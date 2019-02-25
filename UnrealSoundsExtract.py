@@ -73,6 +73,10 @@ def DoExtraction(directory=soundsDirectory):
             'No Files to Extract from in: {0}.'.format(repr(directory)))
 
 
+INPUT_DEFAULT = '.'
+OUTPUT_DEFAULT = './SoundsInWav/'
+
+
 def produce_parser():
     '''Produce command-line parser.
     '''
@@ -84,13 +88,13 @@ def produce_parser():
     )
     parser.add_argument(
         '-i', '--input',
-        required=True,
+        default=INPUT_DEFAULT,
         dest='input',
         help='the install directory of the game',
     )
     parser.add_argument(
         '-o', '--output',
-        default='./SoundsInWav/',
+        default=OUTPUT_DEFAULT,
         dest='output',
         help='the output directory for the extracted sound files',
     )
