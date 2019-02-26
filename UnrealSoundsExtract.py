@@ -6,20 +6,11 @@ import os
 # from: http://wiki.beyondunreal.com/Legacy:BatchExportCommandlet
 # command example: "UCC batchexport Announcer.uax sound wav ..\\test"
 
-SUB_FOLDER_PER_COLLECTION_FILE = True
-
 # if UCC.exe exists: else if UT3.exe exists
-EXTRACTOR_UTIL_FILENAME = 'UCC'  # or 'UCC.exe'
+EXTRACTOR_FILENAME = 'UCC'  # or 'UCC.exe'
 # search batchexport in this for ut3 extract
 # http://forums.epicgames.com/showthread.php?t=585103
 # something like: UT3.exe Editor.BatchExport ...
-
-# up a directory from the CWD (CurrentWorkingDirectory
-# (where the executable file is (in "System")))
-rootDirectory = os.path.abspath('..')
-# systemDirectory = os.path.join(rootDirectory, 'System')
-soundsDirectory = os.path.join(rootDirectory, 'Sounds')
-outputDirectory = os.path.join(rootDirectory, 'SoundsInWav') + os.path.sep
 
 
 def raiseError(error):
@@ -53,28 +44,35 @@ def GetFilenamesInDirectory(directory):
 
 
 def MakeFormatString(
-        subFolderPerCollectionFile=SUB_FOLDER_PER_COLLECTION_FILE,
-        extractorUtilFileName=EXTRACTOR_UTIL_FILENAME):
+        extractorFilepath,
+        subFolderPerCollectionFile):
     return '%s batchexport {0} sound wav "{1}%s"' % (
-        extractorUtilFileName,
+        extractorFilepath,
         bool(subFolderPerCollectionFile) * '{0}')
 
 
-def DoExtraction(directory=soundsDirectory):
-    filenames = GetFilenamesInDirectory(directory)
+def DoExtraction(input, output, flatten):
+    soundsDirectory = os.path.join(input, 'Sounds')
+    systemDirectory = os.path.join(input, 'System')
+    extractorFilepath = os.path.join(systemDirectory, EXTRACTOR_FILENAME)
+    filenames = GetFilenamesInDirectory(soundsDirectory)
     if filenames:  # if there are files
-        formatString = MakeFormatString()
+        formatString = MakeFormatString(
+            extractorFilepath=extractorFilepath,
+            subFolderPerCollectionFile=not flatten)
         commands = [
-            formatString.format(filename, outputDirectory)
+            formatString.format(
+                filename,
+                os.path.join(os.path.abspath(output), ''))
             for filename in filenames]
         list(map(os.system, commands))
     else:
         raise OSError(
-            'No Files to Extract from in: {0}.'.format(repr(directory)))
+            'No Files to Extract from in: {0}.'.format(repr(soundsDirectory)))
 
 
 INPUT_DEFAULT = '.'
-OUTPUT_DEFAULT = './SoundsInWav/'
+OUTPUT_DEFAULT = os.path.join('.', 'SoundsInWav')
 
 
 def produce_parser():
@@ -111,6 +109,10 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     try:
-        DoExtraction()
+        DoExtraction(
+            input=args.input,
+            output=args.output,
+            flatten=args.flatten
+        )
     except Exception as e:
         print(e)
