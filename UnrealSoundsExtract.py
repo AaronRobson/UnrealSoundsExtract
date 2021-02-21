@@ -65,7 +65,8 @@ def DoExtraction(input, output, flatten):
                 filename,
                 os.path.join(os.path.abspath(output), ''))
             for filename in filenames]
-        list(map(os.system, commands))
+        for command in commands:
+            os.system(command)
     else:
         raise OSError(
             'No Files to Extract from in: {0}.'.format(repr(soundsDirectory)))
