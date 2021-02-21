@@ -1,3 +1,8 @@
+.DEFAULT_GOAL := all
+
+.PHONY: all
+all: check test
+
 .PHONY: clean
 clean:
 	rm -rf *.pyc
