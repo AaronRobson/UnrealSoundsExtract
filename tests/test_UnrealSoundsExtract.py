@@ -27,6 +27,7 @@ class TestMakeFormatString(unittest.TestCase):
             ' batchexport {0} sound wav "{1}"'
         self.assertEqual(given, actual)
 
+
 @patch('os.system', return_value=None)
 @patch('UnrealSoundsExtract.GetFilenamesInDirectory', return_value=[])
 class TestDoExtraction(unittest.TestCase):
